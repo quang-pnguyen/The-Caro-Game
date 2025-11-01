@@ -1,4 +1,4 @@
-﻿#include "Save&load.h"
+#include "Save&load.h"
 #include "model.h"  
 
 int getTurnInt() {
@@ -26,11 +26,11 @@ bool saveGame(const string& filename) {
         }
 
         file.close();
-        cout << "\n ĐÃ LƯU MÀN CHƠI!" << endl;
+        cout << "\n DA LUU MAN CHOI!" << endl;
         return true;
     }
     else {
-        cerr << "\n KHÔNG THỂ LƯU" << endl;
+        cerr << "\n KHONG THE LUU" << endl;
         return false;
     }
 }

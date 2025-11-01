@@ -1,4 +1,4 @@
-﻿#include "View.h"
+#include "View.h"
 #include "Control.h"
 #include "Model.h"
 #include "GameState.h"
@@ -7,9 +7,16 @@
 #include <ctype.h>
 #include <iostream>
 #include <windows.h>
-#include "Save&load.h" 
+#include <limits> // <-- Bắt buộc phải có
+#include "Save&load.h"
 
 using namespace std;
+
+// KHẮC PHỤC TRIỆT ĐỂ LỖI CÚ PHÁP C2059/C4003: Vô hiệu hóa macro 'max'
+#ifdef max
+#undef max
+#endif 
+// -------------------------------------------------------------
 
 GameState currentState = MENU;
 
@@ -20,12 +27,12 @@ int main() {
     while (true) {
         switch (currentState) {
 
-            // --- MENU CHÍNH ---
+            // --- MENU CHINH ---
         case MENU: {
             int choice = HandleMainMenuInput();
 
             switch (choice) {
-            case 0: // PLAY
+            case 0: // NEW GAME
                 SetCursorVisible(true);
                 StartGame();
                 currentState = PLAY;
@@ -39,7 +46,7 @@ int main() {
             break;
         }
 
-                 // --- TRẠNG THÁI CHƠI GAME ---
+                 // --- TRANG THAI CHOI GAME ---
         case PLAY: {
             if (_kbhit()) {
                 bool validEnter = true;
@@ -51,13 +58,13 @@ int main() {
                     break;
                 }
 
-                // Di chuyển con trỏ
+                // Di chuyen con tro
                 else if (_COMMAND == 'A') MoveLeft();
                 else if (_COMMAND == 'D') MoveRight();
                 else if (_COMMAND == 'W') MoveUp();
                 else if (_COMMAND == 'S') MoveDown();
 
-                else if (_COMMAND == 13) { // ENTER đánh quân
+                else if (_COMMAND == 13) { // ENTER danh quan
                     GotoXY(_X, _Y);
                     int checkResult = CheckBoard(_X, _Y);
                     switch (checkResult) {
@@ -96,13 +103,13 @@ int main() {
             switch (pauseChoice) {
 
             case 0: // Resume
-                // --- SỬA LỖI RESUME: Đặt lại con trỏ về vị trí cũ ---
+                // SUA LOI RESUME: Dat lai con tro ve vi tri cu
                 system("cls");
                 DrawBoard(BOARD_SIZE);
                 RedrawBoardState();
 
                 SetCursorVisible(true);
-                GotoXY(_X, _Y);         // <-- ĐƯA CON TRỎ VỀ VỊ TRÍ CŨ
+                GotoXY(_X, _Y);
                 currentState = PLAY;
                 break;
 
@@ -115,24 +122,21 @@ int main() {
             case 2: { // Save
                 system("cls");
                 GotoXY(10, 5);
-                std::cout << "Nhập tên file để lưu (vd: mygame1, sau đó nhán Enter): ";
+                // Tieng Viet khong dau
+                std::cout << "Nhap ten file de luu (vd: mygame1, sau do nhan Enter): ";
                 std::string saveName;
                 std::cin >> saveName;
 
-                // Dọn bộ đệm input sau khi nhập tên file
-                std::cin.ignore(200, '\n');
+                // --- DÒNG SỬA LỖI CÚ PHÁP VÀ XUNG ĐỘT MACRO CUỐI CÙNG ---
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                // --------------------------------------------------------
 
-                // THỰC HIỆN SAVE
                 saveGame(saveName);
-
-                // Sau khi Save xong, hiển thị lại menu PAUSE
                 currentState = PAUSE;
                 break;
             }
 
-                  // case 3: Settings (Chức năng này được chuyển xuống khối dưới)
-
-            case 4: // Quit (Về Menu chính)
+            case 4: // Quit (Ve Menu chinh)
                 system("cls");
                 currentState = MENU;
                 SetCursorVisible(false);
@@ -141,56 +145,49 @@ int main() {
             break;
         }
 
-                  // --- TRẠNG THÁI LOAD GAME (ĐÃ TÁCH KHỎI SETTINGS) ---
+                  // --- TRANG THAI LOAD GAME ---
         case LOAD: {
             SetCursorVisible(false);
 
-            // 1. Gọi hàm để liệt kê file và chọn tên file
             string fileNameToLoad = listAndGetFileName();
 
             if (!fileNameToLoad.empty()) {
-                // 2. Nếu chọn được file, thực hiện tải
                 bool loadSuccess = loadGame(fileNameToLoad);
 
                 if (loadSuccess) {
-                    // 3. Nếu tải thành công, thiết lập lại giao diện
+                    // Neu tai thanh cong, thiet lap lai giao dien
                     system("cls");
                     DrawBoard(BOARD_SIZE);
                     RedrawBoardState();
 
-                    // Thiết lập con trỏ về ô [0][0] của bàn cờ
-                    _X = _A[0][0].x;
-                    _Y = _A[0][0].y;
-
+                    // Dat con tro ve vi tri da duoc cap nhat trong loadGame
                     SetCursorVisible(true);
                     GotoXY(_X, _Y);
                     currentState = PLAY;
                 }
                 else {
-                    // Tải thất bại
+                    // Tai that bai (loadGame in thong bao loi va cho Enter)
                     currentState = MENU;
                 }
             }
             else {
-                // Hủy tải
+                // Huy tai
                 currentState = MENU;
             }
             break;
         }
 
-                 // --- CÁC TRẠNG THÁI KHÁC (Chờ phím ESC để thoát) ---
+                 // --- CAC TRANG THAI KHAC (Cho phim ESC de thoat) ---
         case SETTINGS:
         case GUIDE:
         case ABOUT:
-            // Mỗi trạng thái này cần có hàm Draw riêng để hiển thị nội dung.
-            // Hiện tại chỉ xử lý thoát bằng ESC.
-            if (_kbhit() && toupper(_getch()) == 27) { // 27 = ESC
+            if (_kbhit() && toupper(_getch()) == 27) {
                 currentState = MENU;
                 SetCursorVisible(false);
             }
             break;
 
-            // --- THOÁT ---
+            // --- THOAT ---
         case EXIT:
             ExitGame();
             return 0;

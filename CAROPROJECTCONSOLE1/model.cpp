@@ -1,4 +1,4 @@
-﻿#include "Model.h"
+#include "Model.h"
 #include "View.h"
 
 int _X = 0;

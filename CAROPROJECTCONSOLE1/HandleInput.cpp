@@ -1,4 +1,4 @@
-﻿#include "HandleInput.h"
+#include "HandleInput.h"
 #include "view.h"
 #include <conio.h>
 #include <ctype.h>

@@ -1,4 +1,4 @@
-﻿#include "View.h"
+#include "View.h"
 #include "Windows.h"
 #include <conio.h>
 #include "Model.h"
@@ -219,7 +219,7 @@ void DrawFullMenu(int selected_index) {
     // --- KHUNG LOGO ---
     const int LOGO_PADDING = 4;
     std::string logoStr(LOGO_LINE);
-    int frameWidth = logoStr.length() + LOGO_PADDING * 2;
+    int frameWidth = (int)logoStr.length() + LOGO_PADDING * 2;
     int logoX = CenterX(logoStr);
     int frameX = logoX - LOGO_PADDING - 1;
 
@@ -301,7 +301,7 @@ void DrawFullPauseMenu(int selected_index) {
     // --- VẼ KHUNG TIÊU ĐỀ ---
     const std::string title = "GAME PAUSED";
     int titleX = CenterX(title);
-    int frameWidth = title.length() + 8;
+    int frameWidth = (int)title.length() + 8;
     int frameX = titleX - 4;
 
     SetColor(COLOR_LOGO_FRAME);

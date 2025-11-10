@@ -1,5 +1,3 @@
-// File: listandload.cpp (Da chuyen sang tieng Viet khong dau)
-
 #include "Save&load.h"
 #include <vector>     
 #include <conio.h>    
@@ -55,7 +53,7 @@ string listAndGetFileName() {
         cout << "\nChon so thu tu man can tai (Nhap 0 de huy): ";
 
         // Su dung cu phap chuan de don bo dem
-        cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+        //cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 
         if (!(cin >> choice)) {
             cin.clear();

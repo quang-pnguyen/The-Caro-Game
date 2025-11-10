@@ -7,12 +7,11 @@
 #include <ctype.h>
 #include <iostream>
 #include <windows.h>
-#include <limits> // <-- Bắt buộc phải có
+#include <limits> 
 #include "Save&load.h"
 
 using namespace std;
 
-// KHẮC PHỤC TRIỆT ĐỂ LỖI CÚ PHÁP C2059/C4003: Vô hiệu hóa macro 'max'
 #ifdef max
 #undef max
 #endif 
@@ -122,14 +121,14 @@ int main() {
             case 2: { // Save
                 system("cls");
                 GotoXY(10, 5);
-                // Tieng Viet khong dau
+              
                 std::cout << "Nhap ten file de luu (vd: mygame1, sau do nhan Enter): ";
                 std::string saveName;
                 std::cin >> saveName;
 
-                // --- DÒNG SỬA LỖI CÚ PHÁP VÀ XUNG ĐỘT MACRO CUỐI CÙNG ---
+           
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                // --------------------------------------------------------
+            
 
                 saveGame(saveName);
                 currentState = PAUSE;
@@ -167,6 +166,7 @@ int main() {
                 }
                 else {
                     // Tai that bai (loadGame in thong bao loi va cho Enter)
+
                     currentState = MENU;
                 }
             }

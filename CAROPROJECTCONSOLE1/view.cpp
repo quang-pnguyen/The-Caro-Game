@@ -95,7 +95,7 @@ void RedrawBoardState() {
         for (int j = 0; j < BOARD_SIZE; j++) {
 
             // 2. Lấy dữ liệu của từng ô
-            int c = _A[i][j].c;      // Lấy trạng thái ô (-1 là X, 1 là O, 0 là trống)
+            char c = _A[i][j].c;      // Lấy trạng thái ô (-1 là X, 1 là O, 0 là trống)
             int x_pos = _A[i][j].x;  // Lấy tọa độ X màn hình
             int y_pos = _A[i][j].y;  // Lấy tọa độ Y màn hình
 

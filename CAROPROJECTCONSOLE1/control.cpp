@@ -1,4 +1,4 @@
-﻿#include "Control.h"
+#include "Control.h"
 #include "View.h"
 #include "Model.h"
 #include <stdlib.h>
@@ -63,7 +63,7 @@ void SetCursorVisible(bool visible) {
 // Hàm InitConsole chuẩn
 void InitConsole() {
 	system("chcp 65001");
-	
+
 	// 2. Nền trắng, chữ đen mặc định
 	system("color F0");
 

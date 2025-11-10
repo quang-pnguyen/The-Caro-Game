@@ -1,6 +1,6 @@
 #include "Save&load.h"
 #include "model.h"  
-#include "control.h" // Bắt buộc phải có để truy cập _X, _Y
+#include "control.h" 
 #include <iostream>
 #include <conio.h>   // Cho _getch()
 
@@ -15,14 +15,11 @@ bool loadGame(const string& filename) {
     string fullPath = SAVE_DIR + filename + ".txt";
 
     // --- DEBUG LOAD GAME ---
-    system("cls");
-    cout << "\n--- DEBUG LOAD GAME ---" << endl;
-    cout << "Duong dan file: " << fullPath << endl;
-
+   
     ifstream file(fullPath);
 
     if (!file.is_open()) {
-        cout << "LOI NGHIEM TRONG: Khong the mo file: " << fullPath << endl;
+        cout << "LOI: Khong the mo file: " << fullPath << endl;
         cout << "Nhan phim bat ky de ve Menu chinh..." << endl;
         (void)_getch(); // Dung man hinh
         return false;
@@ -39,7 +36,7 @@ bool loadGame(const string& filename) {
         return false;
     }
     // --- DEBUG 2: KIEM TRA KÍCH THƯỚC BOARD ---
-    cout << "Kich thuoc doc duoc: " << temp_size << endl;
+    //cout << "Kich thuoc doc duoc: " << temp_size << endl;
     if (temp_size != BOARD_SIZE) {
         file.close();
         cout << "LOI: Kich thuoc board (" << temp_size << ") khong khop voi cau hinh hien tai (" << BOARD_SIZE << ")." << endl;
@@ -56,7 +53,7 @@ bool loadGame(const string& filename) {
         return false;
     }
     // --- DEBUG 3: IN RA LƯỢT CHƠI ĐÃ ĐỌC ---
-    cout << "Luot choi doc duoc: " << temp_turn << endl;
+    //cout << "Luot choi doc duoc: " << temp_turn << endl;
     // --------------------------------------
     setTurnFromInt(temp_turn);
 
@@ -77,7 +74,7 @@ bool loadGame(const string& filename) {
     _Y = _A[0][0].y;
 
     file.close();
-    cout << "Game da duoc tai thanh cong! Nhan phim bat ky de tiep tuc." << endl;
-    (void)_getch();
+    //cout << "Game da duoc tai thanh cong! Nhan phim bat ky de tiep tuc." << endl;
+    //(void)_getch();
     return true;
 }

@@ -5,7 +5,7 @@ int getTurnInt() {
     return _TURN ? -1 : 1; // Quy ước: -1 cho X, 1 cho O
 }
 
-bool saveGame(const string& filename) { 
+bool saveGame(const string& filename) {
     CreateDirectoryA(SAVE_DIR.c_str(), NULL);
     string fullPath = SAVE_DIR + filename + ".txt";
     ofstream file(fullPath);
